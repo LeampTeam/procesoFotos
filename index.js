@@ -14,8 +14,8 @@ function cambiarNombre(file){
    .exec(function(err,prod){
    
         if(prod!=null){
-        let origen='/home/rafael/programacionrafa/ProyectoAlmacenDIego/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
-        let desti='/home/rafael/programacionrafa/ProyectoAlmacenDIego/API-LeampTeam/imagenes/producto/'+prod.img
+        let origen='/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
+        let desti='/home/diego/Escritorio/LimpTeam/API-LeampTeam/imagenes/'+prod.img
         fs.copyFileSync(origen,desti)  
         }
    })
@@ -31,7 +31,7 @@ function cambiarNombre(file){
 //     })
 }
 
- fs.readdir("/home/rafael/programacionrafa/ProyectoAlmacenDIego/LeampTeam-BackEnd/leampteam/imagenes/producto/",function(err, files) {
+ fs.readdir("/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/",function(err, files) {
      console.log(files)
     if (err) {
        return console.error(err);
