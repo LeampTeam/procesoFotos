@@ -27,7 +27,8 @@ let ProductoFront=connFrontEnd.model('Producto',require('./ShemaFront/producto')
          })
       })
    }
-
+   // let origen='/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
+   // let desti='/home/diego/Escritorio/LimpTeam/API-LeampTeam/imagenes/'+prod.img
    fs.readdir("/home/rafael/programacionrafa/ProyectoAlmacenDIego/LeampTeam-BackEnd/leampteam/imagenes/producto/",function(err, files) {
       console.log(files)
       if (err) {
