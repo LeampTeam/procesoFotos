@@ -21,4 +21,4 @@ var ProducSchema=Schema({
 
 
 
-module.exports=mongoose.model('Producto',ProducSchema)
+module.exports=ProducSchema
