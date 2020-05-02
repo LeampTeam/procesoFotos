@@ -16,15 +16,17 @@ let ProductoFront=connFrontEnd.model('Producto',require('./ShemaFront/producto')
       let date=Date.now().toString()
      await ProductoBack.findOne({img:file})
       .exec(async function(err,produ){
-
-        await ProductoFront.findOneAndUpdate({code:produ.code},{img:'product_'+date+'.'+ext}, { new: true }) 
-         .exec(function(err,prod){
-            if(prod!=null){
-            let origen='/home/rafael/programacionrafa/ProyectoAlmacenDIego/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
-            let desti='/home/rafael/programacionrafa/ProyectoAlmacenDIego/API-LeampTeam/imagenes/producto/'+prod.img
-            fs.copyFileSync(origen,desti) 
+         if(produ!=null){
+            await ProductoFront.findOneAndUpdate({code:produ.code},{img:'product_'+date+'.'+ext}, { new: true }) 
+            .exec(function(err,prod){
+               if(prod!=null){
+               let origen='/home/rafael/programacionrafa/ProyectoAlmacenDIego/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
+               let desti='/home/rafael/programacionrafa/ProyectoAlmacenDIego/API-LeampTeam/imagenes/producto/'+prod.img
+               fs.copyFileSync(origen,desti) 
+            }
+            })
          }
-         })
+       
       })
    }
    // let origen='/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
