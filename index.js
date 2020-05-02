@@ -24,9 +24,10 @@ let ProductoFront=connFrontEnd.model('Producto',require('./ShemaFront/producto')
                let desti='/home/diego/Escritorio/LimpTeam/API-LeampTeam/imagenes/'+prod.img
    fs.copyFileSync(origen,desti) 
          }
-         })
+       
       })
-   }
+   })
+}
    // let origen='/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
    // let desti='/home/diego/Escritorio/LimpTeam/API-LeampTeam/imagenes/'+prod.img
    fs.readdir("/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/",function(err, files) {
