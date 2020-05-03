@@ -1,4 +1,6 @@
 var fs = require("fs")
+var rutas = require('./local')
+
 
 const mongoose = require('mongoose');
 const connBackEnd = mongoose.createConnection('mongodb://localhost:27017/almacenBackEnd',
@@ -16,16 +18,19 @@ let ProductoFront=connFrontEnd.model('Producto',require('./ShemaFront/producto')
       let date=Date.now().toString()
      await ProductoBack.findOne({img:file})
       .exec(async function(err,produ){
-
-        await ProductoFront.findOneAndUpdate({code:produ.code},{img:'product_'+date+'.'+ext}, { new: true }) 
-         .exec(function(err,prod){
-            if(prod!=null){
-               let origen='/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file            
-               let desti='/home/diego/Escritorio/LimpTeam/API-LeampTeam/imagenes/'+prod.img
-   fs.copyFileSync(origen,desti) 
+         if(produ!=null){
+            await ProductoFront.findOneAndUpdate({code:produ.code},{img:'product_'+date+'.'+ext}, { new: true }) 
+            .exec(function(err,prod){
+               if(prod!=null){
+   
+                  let origen=rutas.rutaOrigen+file            
+                  let desti=rutas.rutaDestino+prod.img
+            fs.copyFileSync(origen,desti) 
+            }
+          
+         })
          }
-       
-      })
+      
    })
 }
    // let origen='/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
