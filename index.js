@@ -1,4 +1,6 @@
 var fs = require("fs")
+var rutas = require('./local')
+
 
 const mongoose = require('mongoose');
 const connBackEnd = mongoose.createConnection('mongodb://localhost:27017/almacenBackEnd',
@@ -20,18 +22,20 @@ let ProductoFront=connFrontEnd.model('Producto',require('./ShemaFront/producto')
             await ProductoFront.findOneAndUpdate({code:produ.code},{img:'product_'+date+'.'+ext}, { new: true }) 
             .exec(function(err,prod){
                if(prod!=null){
-               let origen='/home/rafael/programacionrafa/ProyectoAlmacenDIego/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
-               let desti='/home/rafael/programacionrafa/ProyectoAlmacenDIego/API-LeampTeam/imagenes/producto/'+prod.img
-               fs.copyFileSync(origen,desti) 
+   
+                  let origen=rutas.rutaOrigen+file            
+                  let desti=rutas.rutaDestino+prod.img
+            fs.copyFileSync(origen,desti) 
             }
-            })
+          
+         })
          }
-       
-      })
-   }
+      
+   })
+}
    // let origen='/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
    // let desti='/home/diego/Escritorio/LimpTeam/API-LeampTeam/imagenes/'+prod.img
-   fs.readdir("/home/rafael/programacionrafa/ProyectoAlmacenDIego/LeampTeam-BackEnd/leampteam/imagenes/producto/",function(err, files) {
+   fs.readdir("/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/",function(err, files) {
       console.log(files)
       if (err) {
          return console.error(err);
