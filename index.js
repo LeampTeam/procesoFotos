@@ -13,38 +13,61 @@ let ProductoBack=connBackEnd.model('Producto',require('./ShemasBack/producto'))
 
 let ProductoFront=connFrontEnd.model('Producto',require('./ShemaFront/producto'))
 
-  async function cambiarNombre(file){
-      let ext=file.split(".")[1];
-      let date=Date.now().toString()
-     await ProductoBack.findOne({img:file})
-      .exec(async function(err,produ){
+
+   function cambiarNombre(file){
+      let i=0
+      ProductoBack.findOne({img:file},function(err,produ){
          if(produ!=null){
-            await ProductoFront.findOneAndUpdate({code:produ.code},{img:'product_'+date+'.'+ext}, { new: true }) 
-            .exec(function(err,prod){
-               if(prod!=null){
+            
+            let  ext=file.split(".")[1];
+            let  nameimg='product_'+produ._id+'.'+ext
+             ProductoFront.findOneAndUpdate({code:produ.code},{img:nameimg}, { new: true },function(err,pro){
+               i++
+               if(pro!=null){
    
-                  let origen=rutas.rutaOrigen+file            
-                  let desti=rutas.rutaDestino+prod.img
-            fs.copyFileSync(origen,desti) 
-            }
-          
-         })
+                 let origen=rutas.rutaOrigen+file   
+                        
+                  let desti=rutas.rutaDestino+pro.img
+                  
+                  
+                  fs.copyFile(origen,desti,function(err){
+                     if(err){
+                        console.log(err)
+                     }else{
+                        console.log('archivo copiado')
+                     
+                       
+                     }
+                  }) 
+               }
+            }) 
+               
+              
          }
+         
+      })
+    
       
-   })
-}
+   
+   }
+
    // let origen='/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/'+file
    // let desti='/home/diego/Escritorio/LimpTeam/API-LeampTeam/imagenes/'+prod.img
-   fs.readdir("/home/diego/Escritorio/LimpTeam/LeampTeam-BackEnd/leampteam/imagenes/producto/",function(err, files) {
-      console.log(files)
-      if (err) {
-         return console.error(err);
-      }
+   let filesElim=fs.readdirSync(rutas.rutaDestino)
+    
+      filesElim.forEach( function (file) {
+          fs.unlinkSync(rutas.rutaDestino+file)
+      })
+ 
+   
+  let files=fs.readdirSync(rutas.rutaOrigen)
+    
+     
       files.forEach( function (file) {
-         cambiarNombre(file)
-         console.log( file );
-      });
-   });
+        cambiarNombre(file)
+        
+      })
+   
 
  
 
